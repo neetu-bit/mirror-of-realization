@@ -36,9 +36,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:
   position:fixed;top:0;left:0;right:0;z-index:300;
   display:flex;align-items:center;justify-content:space-between;
   padding:.9rem 3rem;
-  background:rgba(28,8,14,.95);
+  background:rgba(28,8,14,.97);
   border-bottom:1px solid var(--crim-line);
-  backdrop-filter:blur(10px);
 }
 .nav-logo{
   font-family:var(--display);font-style:italic;font-size:.95rem;
@@ -557,10 +556,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:
 .nav-burger.open span:nth-child(2){opacity:0}
 .nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
-@media(max-width:600px){
+@media(max-width:900px){
   .home-nav-grid{grid-template-columns:1fr}
   /* Hamburger */
   .nav-burger{display:flex}
+  /* Hide horizontal nav — drawer replaces it */
+  .nav-links{display:none}
   /* Backdrop */
   .nav-overlay{
     display:none;position:fixed;inset:0;z-index:199;
@@ -568,22 +569,21 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:
   }
   .nav-overlay.open{display:block}
   /* Right-side drawer */
-  .nav-links{
-    position:fixed;top:0;right:-100%;
-    width:50vw;max-width:220px;height:100vh;
-    z-index:301;
-    flex-direction:column;align-items:stretch;justify-content:center;
-    background:#1C080E;border-left:1px solid var(--gold-line);
-    list-style:none;margin:0;padding:2rem 0;
-    transition:right .28s ease;
+  .nav-links.open{
     display:flex;
+    position:fixed;top:0;bottom:0;right:0;
+    width:70vw;max-width:280px;
+    z-index:400;
+    flex-direction:column;align-items:stretch;justify-content:flex-start;
+    background:#1C080E;border-left:1px solid var(--gold-line);
+    list-style:none;margin:0;padding:4rem 0 2rem;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
   }
-  .nav-links.open{right:0}
   .nav-links li{border-bottom:1px solid var(--gold-line)}
   .nav-links li:first-child{border-top:1px solid var(--gold-line)}
   .nav-links a{
-    display:block;font-size:.88rem;padding:1.1rem 1.8rem;
-    letter-spacing:.18em;color:var(--text);
+    display:block;font-size:.9rem;padding:1.1rem 1.6rem;
+    letter-spacing:.08em;color:var(--text);white-space:nowrap;
     font-family:var(--util);text-transform:uppercase;
     text-decoration:none;
   }
@@ -773,6 +773,60 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:
 .trad-divider{border:none;border-top:1px solid var(--gold-line);margin:3.5rem 0 2.5rem}
 .trad-section-head{margin-bottom:2rem}
 @media(max-width:600px){.res-tabs{gap:.35rem}.res-tab{font-size:.68rem;padding:.55rem .85rem;min-height:36px}.skt-line{font-size:.95rem}}
+
+/* ── SACRED GROUND PAGE ── */
+.sg-pg{padding:3rem 0 5rem}
+.sg-entry{border:1px solid var(--gold-line);border-radius:3px;margin-bottom:1.5rem;overflow:hidden}
+.sg-entry-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.2rem 1.6rem;background:var(--surface);cursor:pointer;gap:1rem;
+  transition:background .2s;
+}
+.sg-entry-head:hover{background:var(--surface2)}
+.sg-entry-titles{flex:1}
+.sg-eyebrow{
+  display:block;font-family:var(--util);font-size:.62rem;
+  text-transform:uppercase;letter-spacing:.2em;color:var(--gold);
+  margin-bottom:.35rem;
+}
+.sg-entry-title{
+  font-family:var(--display);font-weight:normal;font-style:italic;
+  font-size:1.2rem;color:var(--text);margin:0;line-height:1.3;
+}
+.sg-toggle{color:var(--gold);font-size:.9rem;flex-shrink:0;transition:transform .25s}
+.sg-entry.open .sg-toggle{transform:rotate(180deg)}
+.sg-entry-body{display:none;padding:1.75rem 1.6rem;border-top:1px solid var(--gold-line)}
+.sg-entry.open .sg-entry-body{display:block}
+.sg-para{
+  font-size:1rem;color:rgba(250,232,200,.82);
+  line-height:1.9;margin-bottom:1.3rem;
+}
+.sg-para:last-child{margin-bottom:0}
+.sg-para em{color:var(--saffron);font-style:italic}
+.sg-skt-inline{
+  display:inline-block;font-family:var(--display);font-style:italic;
+  color:var(--gold);font-size:.95rem;
+}
+/* deity grid */
+.sg-deity-grid{margin-top:2.5rem;border-top:1px solid var(--gold-line);padding-top:2rem}
+.sg-deity{
+  padding:1.75rem 0;border-bottom:1px solid rgba(240,186,48,.12);
+}
+.sg-deity:last-child{border-bottom:none;padding-bottom:0}
+.sg-deity-name{
+  font-family:var(--display);font-weight:normal;font-size:1.25rem;
+  color:var(--gold);margin:0 0 1.1rem;display:flex;align-items:baseline;gap:.7rem;
+  letter-spacing:.01em;
+}
+.sg-deity-num{
+  font-family:var(--util);font-size:.62rem;letter-spacing:.18em;
+  color:var(--faint);text-transform:uppercase;flex-shrink:0;
+}
+@media(max-width:600px){
+  .sg-entry-head{padding:1rem 1.1rem}
+  .sg-entry-body{padding:1.25rem 1.1rem}
+  .sg-entry-title{font-size:1.05rem}
+}
 </style>
 
 <!-- ─── NAVIGATION ─── -->
@@ -786,6 +840,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:
     <li><a href="#community"  data-page="community">Community</a></li>
     <li><a href="#gallery"    data-page="gallery">Gallery</a></li>
     <li><a href="#resources"  data-page="resources">Resources</a></li>
+    <li><a href="#sacred-ground" data-page="sacred-ground">Sacred Ground</a></li>
   </ul>
   <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
     <span></span><span></span><span></span>
@@ -2917,6 +2972,223 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:
   <span class="foot-tag">Prakriti is our guide &nbsp;·&nbsp; Purity is our path &nbsp;·&nbsp; Humility is our strength</span>
 </footer>
 
+<!-- ══════════════════════════════════════════ -->
+<!--  PAGE: SACRED GROUND                      -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" data-page="sacred-ground">
+  <div class="page-header">
+    <span class="eyebrow">Foundations</span>
+    <h1>Sacred Ground</h1>
+    <p style="font-family:var(--util);font-size:.82rem;letter-spacing:.05em;color:var(--muted);margin-top:1.2rem;max-width:52ch;margin-left:auto;margin-right:auto;line-height:1.75">Brief introductions to the core concepts of this tradition — grounded in the Kalika Purana and the Tantra shastras. These teachings are not meant to be read once and set aside. They are meant to be returned to, over time, as your understanding deepens.</p>
+  </div>
+
+  <section class="sg-pg">
+    <div class="wrap">
+
+      <!-- ── ENTRY 1: What is Tantra ── -->
+      <div class="sg-entry open">
+        <div class="sg-entry-head">
+          <div class="sg-entry-titles">
+            <span class="sg-eyebrow">The Path</span>
+            <h2 class="sg-entry-title">What is Tantra?</h2>
+          </div>
+          <span class="sg-toggle">▾</span>
+        </div>
+        <div class="sg-entry-body">
+          <p class="sg-para">The word Tantra comes from two Sanskrit roots. The first is <em>tan</em>, which means to expand or to weave. The second is <em>tra</em>, which means to protect or to liberate. Together, they describe a path that expands awareness and frees the soul from what binds it.</p>
+          <p class="sg-para">In the shastra tradition, Tantra is a body of revealed knowledge. These are not philosophical writings created by human scholars. They are transmissions recorded in sacred texts such as the Kalika Purana, the Kularnava Tantra, the Mahanirvana Tantra, and the Tantrasara. These texts carry direct instructions for how to live and practice in a way that leads to liberation.</p>
+          <p class="sg-para">Tantra does not ask you to escape the world. It asks you to see the world clearly, as the living expression of the Goddess herself. Other spiritual paths may treat the body, desire, and material life as obstacles. The Tantric path treats them as doorways. The question is not how to leave the world. The question is how to move through it without being trapped by it.</p>
+          <p class="sg-para">The practice works with <em>tattvas</em> (the foundational elements of existence) and with <em>Shakti</em> (the primordial divine energy that animates all things). The goal is to awaken what is already present but dormant: the divine awareness that lives within every practitioner.</p>
+          <p class="sg-para">The shastras are very clear about what Tantra is not. It is not a path of transgression. It is not spirituality used to justify indulgence. It is not a technique for gaining worldly power or pleasure. These misunderstandings exist in popular culture but have no basis in the sacred texts. Tantra is a path of liberation. It is as serious and demanding as any other genuine path.</p>
+        </div>
+      </div>
+
+      <!-- ── ENTRY 2: The Shakta Path ── -->
+      <div class="sg-entry">
+        <div class="sg-entry-head">
+          <div class="sg-entry-titles">
+            <span class="sg-eyebrow">The Tradition</span>
+            <h2 class="sg-entry-title">The Shakta Path and Maa K&#257;m&#257;khy&#257;</h2>
+          </div>
+          <span class="sg-toggle">▾</span>
+        </div>
+        <div class="sg-entry-body">
+          <p class="sg-para">The Shakta path is built on one understanding: ultimate reality is not an abstract void or a distant formless presence. It is <em>Shakti</em> (the primordial divine energy from which all existence is born and to which all existence returns). Consciousness and energy are not separate. The world is not an illusion to be rejected. It is the living body of the Goddess.</p>
+          <p class="sg-para">Within Shaktism, the Kalika Purana is a foundational text. It establishes Maa K&#257;m&#257;khy&#257; not as a local or regional deity but as the supreme Goddess, the one in whom all Shakti is fully present. The Purana describes her nature, the proper way to approach her worship, and the conditions under which her grace becomes available to the devotee.</p>
+          <p class="sg-para">The name K&#257;m&#257;khy&#257; means &#8220;she who is known through desire.&#8221; This is not desire in the ordinary sense of wanting or craving. It refers to <em>k&#257;ma</em> (the original creative impulse, the force that brings all existence into being). She is the Goddess of the <em>yoni pitha</em> (the sacred seat of the universe&#8217;s creative and generative power). The tradition understands this in a cosmological sense. She is the source of all becoming, the origin from which worlds arise.</p>
+          <p class="sg-para">To walk the Shakta path toward Maa K&#257;m&#257;khy&#257; is to enter a living relationship. Not with a concept. Not with a symbol. With a presence that is real and responsive. The tradition teaches that she draws to herself those who are genuinely ready. The path toward her is not built by effort alone. It is also shaped by her own grace working in the life of the devotee.</p>
+        </div>
+      </div>
+
+      <!-- ── ENTRY 3: Das Mahavidyas ── -->
+      <div class="sg-entry">
+        <div class="sg-entry-head">
+          <div class="sg-entry-titles">
+            <span class="sg-eyebrow">The Goddesses</span>
+            <h2 class="sg-entry-title">Das Mahavidyas &#8212; The Ten Faces of the Goddess</h2>
+          </div>
+          <span class="sg-toggle">▾</span>
+        </div>
+        <div class="sg-entry-body">
+
+          <p class="sg-para">The Mahavidyas appear in the Shakta Mahabhagavata Purana in a story that carries deep meaning. When Sati wishes to attend her father Daksha&#8217;s <em>yajna</em> (sacred ritual) against Shiva&#8217;s wishes, and Shiva tries to stop her, she reveals herself in ten simultaneous forms. She surrounds him in every direction. No matter which way he turns, she is there, in a different form, expressing a different aspect of her power.</p>
+          <p class="sg-para">The Das Mahavidyas are not ten separate goddesses. They are ten <em>vidyas</em> (forms of knowledge, or modes of the Goddess revealing herself). Each one is a complete path. Each one addresses a different dimension of what stands between the soul and liberation: time, death, beauty, the void, speech, the margins of life, absence, and abundance.</p>
+          <p class="sg-para">The Tantric tradition teaches that the entire cosmos moves between these ten poles. To truly know even one Mahavidya is to touch all of them. When a practitioner feels drawn to a particular form, this is not coincidence. It is the Goddess meeting that person where they are.</p>
+
+          <div class="sg-deity-grid">
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">01</span>Kali</h3>
+              <p class="sg-para">She stands beyond time. She is dark, unbound, with her tongue extended, standing upon the still body of Shiva. She is first among the Mahavidyas because her teaching is the most fundamental: the complete destruction of the soul&#8217;s attachment to permanence and form.</p>
+              <p class="sg-para">The Kalika Purana and the Mahakala Samhita describe her as <em>kalakarshini</em> (she who draws even time into herself). Time destroys all things, but Kali destroys time itself. This is not a destructive act. It is the ultimate act of liberation.</p>
+              <p class="sg-para">Her form carries precise teaching. Her four arms hold a severed head, a sword, and the other two hands are raised in <em>abhaya mudra</em> (the gesture of fearlessness) and <em>varada mudra</em> (the gesture of granting boons). She wears a garland of fifty skulls representing the fifty letters of the Sanskrit alphabet, the <em>matrikas</em> (the mother-sounds from which all creation is woven). Her three eyes represent the sun, the moon, and fire, which is to say past, present, and future held simultaneously in her gaze.</p>
+              <p class="sg-para">She stands upon Shiva, who lies beneath her like a corpse. This image is theologically precise. The Mahanirvana Tantra explains: Shiva without Shakti is inert, like a body without life. Shakti is the animating principle. She does not diminish him. She moves through him. Without her, nothing moves, nothing exists.</p>
+              <p class="sg-para">The Devi Mahatmya describes her emergence from the brow of the Goddess to destroy the demon armies of Chanda and Munda. She appeared when all other forces were insufficient. She arrives when nothing else can. This is her nature. She is called upon when the situation demands the absolute.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">02</span>Tara</h3>
+              <p class="sg-para">She carries the devotee across. She is blue in color, seated upon a white lotus, with a compassionate expression despite her fierce appearance. Where Kali destroys what binds, Tara protects the practitioner through the actual crossing from bondage to liberation.</p>
+              <p class="sg-para">The Tara Tantra and the Nila Tantra (the Blue Tantra) describe her as the liberating <em>nada</em> (sacred sound), the vibration that guides through darkness when the practitioner can no longer find the way by their own effort. She is the sound of the Guru&#8217;s voice in the moment of real need.</p>
+              <p class="sg-para">Her four arms hold a sword (<em>khadga</em>), scissors (<em>kartri</em>), a skull cup (<em>kapala</em>), and a blue lotus (<em>utpala</em>). The scissors cut the bonds of attachment. The sword cuts through ignorance. The skull cup holds what has been offered and surrendered. The lotus points to what remains after all cutting is done: purity and beauty.</p>
+              <p class="sg-para">She is called Ugra Tara (the fierce Tara) in many texts, but the fierceness is purposeful. The Nila Tantra explains that her fierceness is precisely what the crossing requires. A gentle hand cannot pull a drowning person out of deep water. She is fierce because she is fully committed to getting the devotee across. This is maternal fierceness, not aggression.</p>
+              <p class="sg-para">In the broader history of the Shakta and Buddhist Tantric traditions, Tara holds a unique position. She appears in both lineages with remarkable consistency, pointing to a very ancient understanding of her as a universal protective and liberating force, one that transcends any single tradition&#8217;s claim.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">03</span>Tripura Sundari</h3>
+              <p class="sg-para">She is the beautiful one of the three worlds (<em>tri</em> means three, <em>pura</em> means worlds, <em>sundari</em> means the beautiful one). She is also called Shodashi (the sixteen-aspected one) and Lalita (the one who plays). She is the supreme Shakti in her fullness: not fierce, not wrathful, but sovereign and complete, holding all power without strain.</p>
+              <p class="sg-para">The Tantraraja Tantra and the Vamakeshvara Tantra are her primary texts. She is described as red like the rising sun, seated on a throne supported by Brahma, Vishnu, Rudra, Ishvara, and Sadashiva. Even the highest divine forces serve as her seat. This is not a statement of hierarchy. It is a cosmological teaching: she is the awareness in which all manifestation, including all divine forms, arises and rests.</p>
+              <p class="sg-para">She holds the bow of sugarcane and arrows of flowers, a noose (<em>pasha</em>), and a goad (<em>ankusha</em>). The bow and arrows represent the mind and its perceptions turned toward the beautiful. The noose binds what needs to be held. The goad directs what needs to move. These are not weapons of violence. They are instruments of precise, intentional love.</p>
+              <p class="sg-para">Her beauty is not decorative. The Lalita Sahasranama from the Brahmanda Purana, which lists her thousand names, describes her beauty as the beauty of pure consciousness recognizing itself. To truly perceive her is to recognize oneself. This is why her path is called <em>srividya upasana</em> (the worship path of auspicious knowledge): because the ultimate knowledge she offers is self-knowledge.</p>
+              <p class="sg-para">She is most closely associated with the Sri Yantra, the geometric diagram that maps her form and the structure of the cosmos simultaneously. The Sri Yantra is not an abstract symbol. The Tantraraja Tantra describes it as the living body of Tripura Sundari expressed in geometry. To contemplate it correctly is to contemplate her.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">04</span>Bhuvaneshvari</h3>
+              <p class="sg-para">She is the mother of all worlds. Her name means the ruler of all that exists. She is <em>akasha</em> (space itself), the vast container in which all things arise, exist, and dissolve. Without her, nothing could appear. All form, all movement, all time exists within her.</p>
+              <p class="sg-para">The Devi Bhagavata describes her as the primal material cause of the universe. She is not simply the creator of worlds. She is the substance of worlds. She is what everything is made of, the space in which everything moves, and the awareness that holds everything effortlessly.</p>
+              <p class="sg-para">Her form is described as the color of the rising sun: luminous, warm, all-encompassing. She holds a noose and goad in two of her hands, while the other two hands are in <em>abhaya mudra</em> (the gesture of protection and fearlessness) and <em>varada mudra</em> (the gesture of granting what is needed). The noose and goad point to her active governance of the cosmos. The mudras point to her fundamental relationship to the devotee: she protects and she provides.</p>
+              <p class="sg-para">The Devi Bhagavata uses an image that is worth sitting with: she holds the universe the way the sky holds clouds. The sky does not grip the clouds. It does not struggle to contain them. They arise in it, move through it, dissolve back into it. The sky is unchanged. This is Bhuvaneshvari. She holds everything that exists without any effort, without any diminishment of herself.</p>
+              <p class="sg-para">Her teaching to the practitioner is the experience of this same quality of awareness: the natural openness that exists before any thought arises, the space that is never actually crowded by its contents.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">05</span>Bhairavi</h3>
+              <p class="sg-para">She is the fierce and radiant one. She is described in the Bhairavi Tantra and the Tantrasara as brilliant red like the rising sun, with three eyes, wearing a garland of severed heads. She holds a rosary (<em>japamala</em>) for sustained mantra practice, a text for the transmission of knowledge, and the other two hands in <em>abhaya</em> and <em>varada mudras</em>. This combination of fierce appearance with the instruments of teaching and blessing is deliberate. She is not a goddess of destruction alone. She is the power that makes real learning possible.</p>
+              <p class="sg-para">The Tantrasara describes her as the embodiment of <em>tapas</em> (the heat generated by genuine, sustained spiritual practice). Every fire requires fuel and sustained attention. The same is true of sadhana. Bhairavi is the aspect of Shakti that sustains the fire of practice when the practitioner&#8217;s enthusiasm would otherwise extinguish it.</p>
+              <p class="sg-para">She is called Nitya Bhairavi in some texts, meaning the eternal one, because the heat of tapas is not a temporary phase of the path. It is the permanent condition of genuine practice. There is no stage of the path where the practitioner no longer needs the fire she provides.</p>
+              <p class="sg-para">The Bhairavi Tantra describes multiple forms of Bhairavi, each associated with a different aspect of transformative power: Tripura Bhairavi, Chaitanya Bhairavi, Rudra Bhairavi, and others. All share the same essential nature: they transform without mercy and without cruelty, the way fire transforms everything it touches without preference or judgment.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">06</span>Chhinnamasta</h3>
+              <p class="sg-para">She holds her own severed head in one hand and a sword in the other. From her open neck, three streams of blood flow: one into her own severed mouth and two into the mouths of her two attendants, Dakini and Varnini, who flank her. She stands upon Kamadeva (the god of desire) and Rati (his consort), who are in intimate union beneath her.</p>
+              <p class="sg-para">This image, which appears deeply shocking to those encountering it for the first time, is one of the most precise and carefully composed teachings in the entire Tantric tradition.</p>
+              <p class="sg-para">The Chhinnamasta Tantra and the Shaktisamgama Tantra explain the image systematically. The three streams of blood represent the three primary <em>nadis</em> (energy channels of the subtle body): <em>ida</em>, <em>pingala</em>, and <em>sushumna</em>. In ordinary experience, the energy of the body flows primarily through ida and pingala, the two lateral channels, sustaining the functioning of the mind and senses. The central channel, sushumna, remains largely closed. The opening of sushumna is the event that makes genuine liberation possible.</p>
+              <p class="sg-para">In the image of Chhinnamasta, the central stream flows into her own severed head: energy moving upward through the central channel, back to its source. The two lateral streams feed her attendants: the ordinary functioning of body and mind is not destroyed but is now fed from a higher source. The practitioner&#8217;s energy is redirected, not eliminated.</p>
+              <p class="sg-para">She stands upon Kamadeva and Rati in union to show that she transcends even the most powerful force in human experience, the force of desire and its fulfillment. She is not anti-desire. She stands on desire&#8217;s highest expression and rises beyond it. Her teaching is about where life force actually goes, and what happens when it is redirected toward its source.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">07</span>Dhumavati</h3>
+              <p class="sg-para">She is the widow. She is the smoky one. She is old, with a stern and weathered face, riding a horseless chariot or a crow. She holds a winnowing basket, the tool used to separate grain from chaff. She is considered inauspicious in conventional religious understanding. The tradition knows her very differently.</p>
+              <p class="sg-para">The Dhumavati Tantra and the Shaktisamgama Tantra describe her as the experience of the divine in the form of absence. She is what remains after dissolution. She is the goddess of hunger that is not fed, of thirst that is not quenched, of the gap between what the practitioner longs for and what is available. She is associated with the experience of <em>mahapralaya</em> (the great cosmic dissolution that precedes renewal).</p>
+              <p class="sg-para">Her image as a widow is precise. In the Indian cosmological framework, the widow has lost what gave her social definition. She stands outside the conventional structures of meaning. This is Dhumavati&#8217;s teaching: the experience of standing outside all frameworks, all comforts, all the stories the mind uses to avoid the truth.</p>
+              <p class="sg-para">The winnowing basket is her primary symbol. It separates what is real from what is not, what endures from what does not, what is substance from what is chaff. This is painful work. But it is necessary work. Without Dhumavati&#8217;s teaching, the practitioner holds onto what must be released.</p>
+              <p class="sg-para">She is worshipped in cremation grounds and in the period after great loss. She is approached by those who are willing to know what remains when everything familiar has been taken away. What remains, the tradition says, is the self that was never actually bound. Her teaching cannot be bypassed. The path that skips Dhumavati is a path that has not yet gone deep enough.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">08</span>Bagalamukhi</h3>
+              <p class="sg-para">She paralyzes. She wears yellow. She is seated on a golden throne surrounded by yellow flowers, specifically <em>haridra</em> (turmeric), which is her sacred color and substance. She holds a club (<em>gada</em>) in her right hand and with her left she pulls the tongue of a figure she holds by the hair.</p>
+              <p class="sg-para">The Bagalamukhi Tantra records the story of her origin. A great and terrible storm arose that threatened to destroy all of creation. The gods gathered at the Haridra Sarovara (the lake of turmeric) in Saurashtra and propitiated the supreme Shakti. From the lake arose Bagalamukhi. She stilled the storm. This is the core of her nature: she is the power that brings chaos to a stop.</p>
+              <p class="sg-para">Her name carries this meaning directly. <em>Bagala</em> means to hold firmly, to seize. <em>Mukhi</em> means face or expression. She is the face that seizes, that stops, that immobilizes. In the Tantra tradition she is associated with <em>stambhana</em> (the power to immobilize what is in movement).</p>
+              <p class="sg-para">In inner practice, stambhana refers to something far more significant: the moment when the endless movement of the mind, the constant stream of <em>vikalpas</em> (mental modifications and alternatives), finally stops. The image of her pulling the tongue of her opponent is an image of <em>vak stambhana</em> (the stilling of the mind&#8217;s compulsive commentary). The mind that argues with reality, the mind that cannot be still, is what she holds by the hair. When her power descends in practice, the inner noise stops. What remains is clarity.</p>
+              <p class="sg-para">She is also called Pitambari (the one clothed in yellow) and is associated with the brahmastra (the supreme mantra-weapon of Brahma). She is worshipped particularly by those who face opposition, those who need to protect what is true, and those who need the mind&#8217;s noise to stop long enough to hear what is real.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">09</span>Matangi</h3>
+              <p class="sg-para">She is the outcaste goddess. She is the Tantric form of the goddess of speech, music, and the arts. She is green in color, holding a <em>vina</em> (the stringed instrument associated with Sarasvati) in some forms, with a parrot seated near her.</p>
+              <p class="sg-para">The Matangi Tantra and related Shakta texts describe her as accepting <em>uchishtha</em> (that which is leftover, impure, or excluded by conventional ritual purity standards). In traditional ritual contexts, offerings must be fresh, clean, and prepared according to specific rules. What is leftover or partially consumed is considered impure and unfit for worship. Matangi accepts precisely these offerings.</p>
+              <p class="sg-para">This is not a romanticization of impurity for its own sake. It is a cosmological statement. Shakti is complete. She excludes nothing from her embrace. The conventional religious world draws sharp lines between the pure and the impure, the included and the excluded, the sacred and the marginal. Matangi stands at exactly those lines and dissolves them.</p>
+              <p class="sg-para">She is called Ucchishtha Chandalini in some texts, literally the outcaste goddess of the impure offering. The chandala (the one who works with death, with impurity, with what society excludes) is her priest. This is consistent with the broader Tantric understanding that the divine is not confined to places of purity and beauty. It is equally present in the margins.</p>
+              <p class="sg-para">The Matangi Tantra associates her with victory in debate, mastery of language and music, and the ability to draw all things to oneself through speech and song. She bestows eloquence and artistic mastery, but only to those who are willing to meet her in the places where the conventional religious world does not go. Her teaching is that completeness leaves nothing out.</p>
+            </div>
+
+            <div class="sg-deity">
+              <h3 class="sg-deity-name"><span class="sg-deity-num">10</span>Kamala</h3>
+              <p class="sg-para">She is the lotus goddess. She is the last of the ten Mahavidyas. She is Lakshmi in her Tantric or Mahavidya aspect, but what she offers here is significantly different from what the Puranic Lakshmi grants.</p>
+              <p class="sg-para">She is described as golden in color, seated upon a fully bloomed lotus, flanked by four white elephants who pour streams of water over her from golden vessels. She holds two lotuses in two of her hands, and her other two hands are in <em>abhaya mudra</em> (protection) and <em>varada mudra</em> (the granting of what is needed).</p>
+              <p class="sg-para">The Devi Bhagavata and several Shakta Tantric texts describe the difference between Lakshmi and Kamala as Mahavidya. The Puranic Lakshmi grants worldly prosperity: wealth, health, good fortune. These are not trivial gifts. But Kamala as Mahavidya grants something that cannot be granted to those who have not traveled through the other nine forms: the experience of the world itself as inherently auspicious.</p>
+              <p class="sg-para">The Tantric tradition does not reject the world. But the ordinary experience of the world is colored by the mind&#8217;s fears and its sense of lack and incompleteness. Even great material abundance does not resolve this. What Kamala offers, to those who have journeyed through Kali&#8217;s dissolution, Dhumavati&#8217;s emptiness, Chhinnamasta&#8217;s redirection, and the teachings of all the others, is a direct experience of the world as it actually is: full, luminous, and already complete.</p>
+              <p class="sg-para">She is inseparable, in many texts, from Narayana or Vishnu. This pairing points to the same teaching in a different language: when consciousness (Vishnu, the all-pervading) and energy (Lakshmi/Kamala) are recognized as inseparable, the experience of the world transforms. Nothing needs to change in the outer world. What changes is the perception. She is the fruit of the entire journey through the other nine.</p>
+            </div>
+
+          </div><!-- /sg-deity-grid -->
+        </div>
+      </div>
+
+      <!-- ── ENTRY 4: Sadhana ── -->
+      <div class="sg-entry">
+        <div class="sg-entry-head">
+          <div class="sg-entry-titles">
+            <span class="sg-eyebrow">The Practice</span>
+            <h2 class="sg-entry-title">What is S&#257;dhan&#257;?</h2>
+          </div>
+          <span class="sg-toggle">▾</span>
+        </div>
+        <div class="sg-entry-body">
+          <p class="sg-para">The word <em>sadhana</em> (s&#257;dhan&#257;) comes from the Sanskrit root <em>sadh</em>, which means to go straight toward something, to accomplish. In the Tantric tradition, what is being accomplished is not an external goal. It is the steady removal of what hides the awareness that is already whole and complete within the practitioner.</p>
+          <p class="sg-para">The Kularnava Tantra is direct about this: the path requires sustained practice over time. Not moments of inspiration. Not occasional peak experiences. It requires consistent, grounded commitment to <em>mantra</em> (sacred sound formulas), ritual, study, and the guidance of the Guru (spiritual teacher). This commitment must hold through periods of dryness and difficulty, not only through periods of opening and clarity.</p>
+          <p class="sg-para">Sadhana is not spirituality as personal expression or exploration. It has a specific form. It has discipline. It exists within a lineage, and that lineage shapes it. What is practiced, when it is practiced, and how it is practiced are not personal choices left to the individual. They are transmissions from the Guru, adapted to the practitioner&#8217;s stage and nature.</p>
+          <p class="sg-para">The Tantric tradition also recognizes that the same practice produces different effects at different stages of life. This is why the texts speak of the relationship between sadhana and <em>kala</em> (time). Time is not an obstacle to realization. It is one of the teachers on the path. A practice that opens something in one decade of life may need to deepen and change in the next. The commitment is not to a particular technique. It is to the path itself.</p>
+          <p class="sg-para">Above all, sadhana asks for continuity. The Kalika Purana holds this clearly: sincere practice sustained over time is never without result. The Devi does not abandon the one who keeps returning.</p>
+        </div>
+      </div>
+
+      <!-- ── ENTRY 5: Guru-Shishya ── -->
+      <div class="sg-entry">
+        <div class="sg-entry-head">
+          <div class="sg-entry-titles">
+            <span class="sg-eyebrow">The Relationship</span>
+            <h2 class="sg-entry-title">Guru-Shishya: The Living Transmission</h2>
+          </div>
+          <span class="sg-toggle">▾</span>
+        </div>
+        <div class="sg-entry-body">
+          <p class="sg-para">The Kularnava Tantra gives extended attention to the Guru (spiritual teacher). It does this not because the tradition demands blind obedience to authority, but because the tradition understands something essential: certain knowledge cannot be received from a text alone. It must be transmitted from one living person to another.</p>
+          <p class="sg-para">The word <em>shishya</em> (disciple) comes from the root <em>shis</em>, which means to be shaped or to be formed. A shishya is not a student in the academic sense. A shishya is someone who has made themselves genuinely available to be transformed, not just to receive information. The Guru-shishya relationship is serious because what it carries is serious. The shishya&#8217;s movement toward liberation depends on the integrity and depth of the transmission they receive.</p>
+          <p class="sg-para">The Tantra tradition is very clear: without a living Guru, the shastras (sacred texts) are incomplete as a path. The texts themselves state this. The Mahanirvana Tantra, the Kularnava Tantra, and the Tantrasara all teach that complete knowledge of scripture, without the grace of a Guru who has lived and realized the path, is not sufficient. The Guru does not add new information to what is in the texts. The Guru awakens in the shishya what the texts can only point toward but cannot deliver on their own.</p>
+          <p class="sg-para">This is not a teaching about submission or the surrendering of one&#8217;s own judgment. The tradition also describes clearly what constitutes a genuine Guru: someone who is <em>sthitaprajna</em> (established in wisdom and realization), and who transmits from that stable ground rather than from ego or personal ambition. The shishya is responsible for discernment. But once genuine trust is established, the relationship asks for real openness to being changed, not just informed.</p>
+          <p class="sg-para">In this lineage, the Guru-shishya relationship is the living foundation of everything.</p>
+        </div>
+      </div>
+
+      <!-- ── ENTRY 6: Diksha ── -->
+      <div class="sg-entry">
+        <div class="sg-entry-head">
+          <div class="sg-entry-titles">
+            <span class="sg-eyebrow">Initiation</span>
+            <h2 class="sg-entry-title">What is D&#299;ksh&#257;?</h2>
+          </div>
+          <span class="sg-toggle">▾</span>
+        </div>
+        <div class="sg-entry-body">
+          <p class="sg-para">The Kularnava Tantra defines <em>diksha</em> (initiation) in a verse that is worth quoting directly: <span class="sg-skt-inline">&#8220;Divyam jnanam yato dadyat kuryat papaksayam tatha&#8221;</span> &#8212; which means: &#8220;That which bestows divine knowledge and brings about the dissolution of accumulated karma is what the knowers of tradition call diksha.&#8221;</p>
+          <p class="sg-para">Diksha is initiation. But it is not initiation in the ceremonial or symbolic sense that the word sometimes carries in modern usage. In the Tantric tradition, diksha is a real transmission of Shakti (divine energy) from the Guru to the shishya. It produces an actual change in the practitioner&#8217;s inner condition. The Tantra shastras describe several forms of diksha: <em>sparsha diksha</em> (through physical touch), <em>drik diksha</em> (through the Guru&#8217;s gaze), <em>manasa diksha</em> (through thought and intention), and <em>varna diksha</em> (through the sacred word). Each form is chosen based on the readiness of the shishya and the judgment of the Guru.</p>
+          <p class="sg-para">Diksha is not an enrollment into a program. It is not a certificate or a credential. It cannot be scheduled on demand or given to anyone who arrives with good intentions. The tradition is clear: diksha given to someone who is not genuinely ready produces no real fruit. This is why the Guru&#8217;s discernment is as important as the sincerity of the shishya.</p>
+          <p class="sg-para">After diksha, something changes in the practitioner&#8217;s relationship with the Devi. The path is no longer held by personal effort alone. It is now held by the lineage. The mantra (sacred sound formula) received through diksha carries within it the awakened intention of every Guru in the lineage who has transmitted it before. This is what makes it fundamentally different from a mantra encountered in a text or learned from a recording.</p>
+          <p class="sg-para">Diksha is a beginning. What opens through it takes a full lifetime of sincere practice to understand and to live.</p>
+        </div>
+      </div>
+
+    </div><!-- /wrap -->
+  </section>
+</div><!-- /sacred-ground -->
+
+
 <!-- ─── SCRIPTS ─── -->
 <script>
 /* ── ROUTING ── */
@@ -3192,6 +3464,13 @@ document.querySelectorAll('.res-tab').forEach(function(tab){
   });
 });
 document.querySelectorAll('.res-card-head').forEach(function(head){
+  head.addEventListener('click',function(){
+    head.parentElement.classList.toggle('open');
+  });
+});
+
+/* ── SACRED GROUND ACCORDION ── */
+document.querySelectorAll('.sg-entry-head').forEach(function(head){
   head.addEventListener('click',function(){
     head.parentElement.classList.toggle('open');
   });
